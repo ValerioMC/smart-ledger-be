@@ -1,33 +1,33 @@
 # Smart Ledger Backend
 
-Applicazione backend per Smart Ledger - Sistema di gestione finanziaria intelligente.
+Application backend for Smart Ledger – Intelligent financial management system.
 
-## Tecnologie Utilizzate
+## Technologies Used
 
-- **Java 21** - Linguaggio di programmazione
-- **Spring Boot 3.4.1** - Framework per applicazioni Java
-- **Spring Security** - Framework per autenticazione e autorizzazione
-- **Spring Data JPA** - Astrazione per l'accesso ai dati
-- **PostgreSQL** - Database relazionale
-- **Liquibase** - Gestione versioning del database
-- **Lombok** - Libreria per ridurre il boilerplate code
-- **JWT (JSON Web Token)** - Autenticazione stateless
-- **SpringDoc OpenAPI 3** - Documentazione API (Swagger)
-- **Maven** - Build automation tool
+- **Java 21** – Programming language
+- **Spring Boot 3.4.1** – Java application framework
+- **Spring Security** – Authentication and authorization framework
+- **Spring Data JPA** – Data access abstraction
+- **PostgreSQL** – Relational database
+- **Liquibase** – Database versioning management
+- **Lombok** – Library to reduce boilerplate code
+- **JWT (JSON Web Token)** – Stateless authentication
+- **SpringDoc OpenAPI 3** – API documentation (Swagger)
+- **Maven** – Build automation tool
 
-## Prerequisiti
+## Prerequisites
 
 - Java JDK 21+
 - Maven 3.8+
 - PostgreSQL 14+
-- Docker (opzionale, per eseguire PostgreSQL in container)
+- Docker (optional, to run PostgreSQL in a container)
 
-## Setup Database
+## Database Setup
 
-### Opzione 1: PostgreSQL Locale
+### Option 1: Local PostgreSQL
 
-1. Installare PostgreSQL
-2. Creare il database:
+1. Install PostgreSQL
+2. Create the database:
 
 ```sql
 CREATE DATABASE smartledger;
@@ -35,7 +35,7 @@ CREATE USER smartledger WITH PASSWORD 'smartledger';
 GRANT ALL PRIVILEGES ON DATABASE smartledger TO smartledger;
 ```
 
-### Opzione 2: Docker
+### Option 2: Docker
 
 ```bash
 docker run --name smartledger-postgres \
@@ -46,84 +46,84 @@ docker run --name smartledger-postgres \
   -d postgres:16
 ```
 
-## Configurazione
+## Configuration
 
-L'applicazione utilizza il file `src/main/resources/application.yml` per la configurazione.
+The application uses the `src/main/resources/application.yml` file for configuration.
 
-### Variabili d'Ambiente
+### Environment Variables
 
-È possibile sovrascrivere la configurazione usando variabili d'ambiente:
+You can override configuration using environment variables:
 
-- `SPRING_DATASOURCE_URL` - URL del database
-- `SPRING_DATASOURCE_USERNAME` - Username del database
-- `SPRING_DATASOURCE_PASSWORD` - Password del database
-- `JWT_SECRET` - Chiave segreta per JWT (minimo 256 bit)
+- `SPRING_DATASOURCE_URL` – Database URL
+- `SPRING_DATASOURCE_USERNAME` – Database username
+- `SPRING_DATASOURCE_PASSWORD` – Database password
+- `JWT_SECRET` – Secret key for JWT (minimum 256 bits)
 
-## Installazione
+## Installation
 
 ```bash
-# Clonare il repository
+# Clone the repository
 cd smart-ledger-be
 
-# Installare le dipendenze e compilare
+# Install dependencies and build
 mvn clean install
 ```
 
-## Sviluppo
+## Development
 
 ```bash
-# Avviare l'applicazione in modalità sviluppo
+# Start the application in development mode
 mvn spring-boot:run
 
-# L'applicazione sarà disponibile su http://localhost:8080/api
-# Swagger UI sarà disponibile su http://localhost:8080/api/swagger-ui.html
+# The application will be available at http://localhost:8080/api
+# Swagger UI will be available at http://localhost:8080/api/swagger-ui.html
 ```
 
 ## Build
 
 ```bash
-# Build di produzione
+# Production build
 mvn clean package
 
-# Il file JAR sarà generato in target/smart-ledger-be-1.0.0.jar
+# The JAR file will be generated at target/smart-ledger-be-1.0.0.jar
 ```
 
-## Test
+## Tests
 
 ```bash
-# Eseguire i test
+# Run tests
 mvn test
 
-# Eseguire i test con coverage
+# Run tests with coverage
 mvn clean test jacoco:report
 ```
 
-## Struttura del Progetto
+## Project Structure
 
 ```
 src/main/java/com/smartledger/
-├── config/              # Configurazioni Spring
+├── config/              # Spring configurations
 │   ├── SecurityConfig.java
 │   └── CorsConfig.java
-├── controller/          # REST Controllers
+├── controller/          # REST controllers
 │   └── AuthController.java
 ├── dto/                 # Data Transfer Objects
 │   ├── LoginRequest.java
 │   └── LoginResponse.java
-├── entity/              # JPA Entities
+├── entity/              # JPA entities
 │   └── User.java
-├── repository/          # Spring Data Repositories
+├── repository/          # Spring Data repositories
 │   └── UserRepository.java
-├── security/            # Componenti di sicurezza
+├── security/            # Security components
 │   ├── JwtUtil.java
 │   └── JwtAuthenticationFilter.java
-├── service/             # Business Logic
+├── service/             # Business logic
 │   ├── AuthService.java
 │   └── UserDetailsServiceImpl.java
 └── SmartLedgerApplication.java
 
 src/main/resources/
-├── application.yml      # Configurazione applicazione
+├── application.yml      # Application configuration
 └── db/changelog/        # Liquibase migrations
     ├── db.changelog-master.xml
     └── changes/
@@ -132,7 +132,7 @@ src/main/resources/
 
 ## API Endpoints
 
-### Autenticazione
+### Authentication
 
 #### Login
 ```http
@@ -158,48 +158,48 @@ GET /api/auth/health
 Response: "Service is running"
 ```
 
-### Credenziali di Default
+### Default Credentials
 
 - **Username**: `admin`
 - **Password**: `admin123`
 
-## Documentazione API (Swagger/OpenAPI)
+## API Documentation (Swagger/OpenAPI)
 
-L'applicazione integra **SpringDoc OpenAPI 3** per la documentazione interattiva delle API.
+The application integrates **SpringDoc OpenAPI 3** for interactive API documentation.
 
-### Accesso a Swagger UI
+### Accessing Swagger UI
 
-Una volta avviata l'applicazione, la documentazione interattiva è disponibile a:
+Once the application is running, the interactive documentation is available at:
 
 - **Swagger UI**: http://localhost:8080/api/swagger-ui.html
 - **OpenAPI JSON**: http://localhost:8080/api/v3/api-docs
 - **OpenAPI YAML**: http://localhost:8080/api/v3/api-docs.yaml
 
-### Utilizzo di Swagger UI
+### Using Swagger UI
 
-1. Aprire http://localhost:8080/api/swagger-ui.html nel browser
-2. Esplorare gli endpoint disponibili organizzati per tag
-3. Testare gli endpoint direttamente dall'interfaccia:
-   - Click su un endpoint per espanderlo
-   - Click su "Try it out"
-   - Inserire i parametri richiesti
-   - Click su "Execute"
+1. Open http://localhost:8080/api/swagger-ui.html in your browser
+2. Explore the available endpoints organized by tags
+3. Test endpoints directly from the interface:
+   - Click an endpoint to expand it
+   - Click "Try it out"
+   - Enter the required parameters
+   - Click "Execute"
 
-### Autenticazione con JWT in Swagger
+### JWT Authentication in Swagger
 
-Per testare endpoint protetti:
+To test protected endpoints:
 
-1. Fare login tramite l'endpoint `/auth/login`
-2. Copiare il token dalla risposta
-3. Click sul pulsante "Authorize" in alto a destra
-4. Inserire: `Bearer {token}` (sostituire `{token}` con il token copiato)
-5. Click su "Authorize"
-6. Ora puoi testare tutti gli endpoint protetti
+1. Log in via the `/auth/login` endpoint
+2. Copy the token from the response
+3. Click the "Authorize" button at the top right
+4. Enter: `Bearer {token}` (replace `{token}` with the copied token)
+5. Click "Authorize"
+6. You can now test all protected endpoints
 
-### Esempio
+### Example
 
 ```bash
-# 1. Login per ottenere il token
+# 1. Login to obtain the token
 curl -X POST http://localhost:8080/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"admin123"}'
@@ -207,14 +207,14 @@ curl -X POST http://localhost:8080/api/auth/login \
 # Response:
 # {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...","username":"admin"}
 
-# 2. Usare il token per le richieste protette
+# 2. Use the token for protected requests
 curl -X GET http://localhost:8080/api/protected-endpoint \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
-### Configurazione
+### Configuration
 
-La configurazione di SpringDoc si trova in `application.yml`:
+The SpringDoc configuration is located in `application.yml`:
 
 ```yaml
 springdoc:
@@ -228,9 +228,9 @@ springdoc:
     tagsSorter: alpha
 ```
 
-### Disabilitare Swagger in Produzione
+### Disabling Swagger in Production
 
-Per disabilitare Swagger in produzione, impostare in `application.yml`:
+To disable Swagger in production, set in `application.yml`:
 
 ```yaml
 springdoc:
@@ -240,7 +240,7 @@ springdoc:
     enabled: false
 ```
 
-O tramite variabile d'ambiente:
+Or via environment variables:
 ```bash
 SPRINGDOC_API-DOCS_ENABLED=false
 SPRINGDOC_SWAGGER-UI_ENABLED=false
@@ -248,28 +248,28 @@ SPRINGDOC_SWAGGER-UI_ENABLED=false
 
 ## Liquibase
 
-Liquibase gestisce automaticamente le migrazioni del database all'avvio dell'applicazione.
+Liquibase automatically manages database migrations at application startup.
 
-### Comandi Utili
+### Useful Commands
 
 ```bash
-# Visualizzare lo stato delle migrazioni
+# Show migration status
 mvn liquibase:status
 
-# Rollback dell'ultima migrazione
+# Roll back the last migration
 mvn liquibase:rollback -Dliquibase.rollbackCount=1
 
-# Generare SQL per le migrazioni
+# Generate SQL for migrations
 mvn liquibase:updateSQL
 ```
 
-### Aggiungere una Nuova Migrazione
+### Adding a New Migration
 
-1. Creare un nuovo file XML in `src/main/resources/db/changelog/changes/`
-2. Aggiungere l'include nel file `db.changelog-master.xml`
-3. Riavviare l'applicazione
+1. Create a new XML file in `src/main/resources/db/changelog/changes/`
+2. Add the include in the `db.changelog-master.xml` file
+3. Restart the application
 
-Esempio:
+Example:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
@@ -285,9 +285,9 @@ Esempio:
 
 ## Deployment
 
-### Build Docker
+### Docker Build
 
-Creare un `Dockerfile`:
+Create a `Dockerfile`:
 
 ```dockerfile
 FROM eclipse-temurin:21-jre-alpine
@@ -297,13 +297,13 @@ EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
 ```
 
-Comandi Docker:
+Docker commands:
 
 ```bash
-# Build dell'immagine
+# Build the image
 docker build -t smart-ledger-be:1.0.0 .
 
-# Run del container
+# Run the container
 docker run -p 8080:8080 \
   -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/smartledger \
   -e SPRING_DATASOURCE_USERNAME=smartledger \
@@ -312,20 +312,20 @@ docker run -p 8080:8080 \
   smart-ledger-be:1.0.0
 ```
 
-### Deploy su Server
+### Deploy to Server
 
 ```bash
-# Copiare il JAR sul server
+# Copy the JAR to the server
 scp target/smart-ledger-be-1.0.0.jar user@server:/opt/smart-ledger/
 
-# Eseguire l'applicazione
+# Run the application
 java -jar /opt/smart-ledger/smart-ledger-be-1.0.0.jar \
   --spring.datasource.url=jdbc:postgresql://localhost:5432/smartledger \
   --spring.datasource.username=smartledger \
   --spring.datasource.password=smartledger
 ```
 
-### Configurazione Nginx (Reverse Proxy)
+### Nginx Configuration (Reverse Proxy)
 
 ```nginx
 server {
@@ -342,31 +342,31 @@ server {
 }
 ```
 
-## Sicurezza
+## Security
 
 ### JWT Configuration
 
-- Il token JWT ha una validità di 24 ore (configurabile in `application.yml`)
-- La chiave segreta deve essere cambiata in produzione
-- Generare una chiave sicura con: `openssl rand -base64 64`
+- The JWT token is valid for 24 hours (configurable in `application.yml`)
+- The secret key must be changed in production
+- Generate a secure key with: `openssl rand -base64 64`
 
 ### Best Practices
 
-1. Cambiare la password di default dell'utente admin
-2. Usare HTTPS in produzione
-3. Configurare rate limiting
-4. Implementare logging e monitoring
-5. Backup regolari del database
+1. Change the default admin user password
+2. Use HTTPS in production
+3. Configure rate limiting
+4. Implement logging and monitoring
+5. Perform regular database backups
 
 ## Logging
 
-I log sono configurati con i seguenti livelli:
+Logs are configured with the following levels:
 
-- `INFO` - Livello di default
-- `DEBUG` - Per troubleshooting (configurabile in application.yml)
-- `ERROR` - Per errori applicativi
+- `INFO` – Default level
+- `DEBUG` – For troubleshooting (configurable in `application.yml`)
+- `ERROR` – For application errors
 
-Configurare in `application.yml`:
+Configure in `application.yml`:
 
 ```yaml
 logging:
@@ -375,9 +375,9 @@ logging:
     org.springframework.security: DEBUG
 ```
 
-## Monitoraggio
+## Monitoring
 
-Spring Boot Actuator può essere abilitato per il monitoraggio:
+Spring Boot Actuator can be enabled for monitoring:
 
 ```xml
 <dependency>
@@ -386,37 +386,37 @@ Spring Boot Actuator può essere abilitato per il monitoraggio:
 </dependency>
 ```
 
-Endpoints disponibili su `/actuator`:
-- `/health` - Stato dell'applicazione
-- `/metrics` - Metriche dell'applicazione
-- `/info` - Informazioni sull'applicazione
+Available endpoints at `/actuator`:
+- `/health` – Application status
+- `/metrics` – Application metrics
+- `/info` – Application information
 
-## Sviluppo Futuro
+## Future Development
 
-- [ ] Gestione transazioni finanziarie
-- [ ] Categorie personalizzabili
-- [ ] Report e statistiche
-- [ ] Export dati (CSV, PDF)
-- [ ] Notifiche email
-- [ ] API per gestione budget
+- [ ] Financial transaction management
+- [ ] Customizable categories
+- [ ] Reports and statistics
+- [ ] Data export (CSV, PDF)
+- [ ] Email notifications
+- [ ] Budget management API
 - [ ] Multi-tenancy
 
 ## Troubleshooting
 
 ### Database Connection Failed
 
-Verificare che:
-1. PostgreSQL sia in esecuzione
-2. Le credenziali siano corrette
-3. Il firewall permetta la connessione sulla porta 5432
+Check that:
+1. PostgreSQL is running
+2. Credentials are correct
+3. The firewall allows connections on port 5432
 
 ### JWT Token Invalid
 
-Verificare che:
-1. Il token non sia scaduto
-2. La chiave segreta sia la stessa usata per generare il token
-3. Il token sia nel formato corretto: `Bearer <token>`
+Check that:
+1. The token has not expired
+2. The secret key is the same used to sign the token
+3. The token has the correct format: `Bearer <token>`
 
-## Licenza
+## License
 
-Tutti i diritti riservati © 2025
+All rights reserved © 2025
