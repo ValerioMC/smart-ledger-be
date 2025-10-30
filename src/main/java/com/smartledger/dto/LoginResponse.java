@@ -1,13 +1,19 @@
 package com.smartledger.dto;
 
+import com.smartledger.entity.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "Risposta del login contenente il token JWT e lo username")
+import java.util.Set;
+
+@Schema(description = "Login response containing JWT token, username and user roles")
 public record LoginResponse(
-    @Schema(description = "Token JWT per l'autenticazione delle richieste successive",
+    @Schema(description = "JWT token for authenticating subsequent requests",
             example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
     String token,
 
-    @Schema(description = "Nome utente autenticato", example = "admin")
-    String username
+    @Schema(description = "Authenticated username", example = "admin")
+    String username,
+
+    @Schema(description = "Roles assigned to the user", example = "[\"ADMIN\"]")
+    Set<Role> roles
 ) {}

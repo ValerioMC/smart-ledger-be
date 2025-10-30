@@ -43,11 +43,12 @@ public class AuthService {
 
             // Get user details
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            User user = (User) userDetails;
 
             // Generate JWT token
             String token = jwtUtil.generateToken(userDetails);
 
-            return new LoginResponse(token, userDetails.getUsername());
+            return new LoginResponse(token, user.getUsername(), user.getRoles());
 
         } catch (AuthenticationException e) {
             log.error("Authentication failed for user: {}", loginRequest.username());

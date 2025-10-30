@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="003-create-transactions-table" author="smartledger">
+        <!-- Create transactions table -->
+        <createTable tableName="transactions">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_transactions_user" references="users(id)"/>
+            </column>
+            <column name="type" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="DECIMAL(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(500)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <!-- Create indexes for better query performance -->
+        <createIndex indexName="idx_transactions_user_id" tableName="transactions">
+            <column name="user_id"/>
+        </createIndex>
+
+        <createIndex indexName="idx_transactions_date" tableName="transactions">
+            <column name="date"/>
+        </createIndex>
+
+        <createIndex indexName="idx_transactions_type" tableName="transactions">
+            <column name="type"/>
+        </createIndex>
+
+        <!-- Insert sample transactions for testing -->
+        <insert tableName="transactions">
+            <column name="user_id" valueComputed="(SELECT id FROM users WHERE username = 'admin')"/>
+            <column name="type" value="INCOME"/>
+            <column name="category" value="SALARY"/>
+            <column name="amount" value="3000.00"/>
+            <column name="date" valueDate="2025-10-01"/>
+            <column name="description" value="Monthly salary October"/>
+        </insert>
+
+        <insert tableName="transactions">
+            <column name="user_id" valueComputed="(SELECT id FROM users WHERE username = 'admin')"/>
+            <column name="type" value="EXPENSE"/>
+            <column name="category" value="RENT"/>
+            <column name="amount" value="800.00"/>
+            <column name="date" valueDate="2025-10-05"/>
+            <column name="description" value="Monthly rent payment"/>
+        </insert>
+
+        <insert tableName="transactions">
+            <column name="user_id" valueComputed="(SELECT id FROM users WHERE username = 'admin')"/>
+            <column name="type" value="EXPENSE"/>
+            <column name="category" value="UTILITIES"/>
+            <column name="amount" value="120.50"/>
+            <column name="date" valueDate="2025-10-10"/>
+            <column name="description" value="Electricity and water bill"/>
+        </insert>
+
+        <insert tableName="transactions">
+            <column name="user_id" valueComputed="(SELECT id FROM users WHERE username = 'admin')"/>
+            <column name="type" value="EXPENSE"/>
+            <column name="category" value="GROCERIES"/>
+            <column name="amount" value="250.00"/>
+            <column name="date" valueDate="2025-10-15"/>
+            <column name="description" value="Weekly groceries shopping"/>
+        </insert>
+
+        <insert tableName="transactions">
+            <column name="user_id" valueComputed="(SELECT id FROM users WHERE username = 'user')"/>
+            <column name="type" value="INCOME"/>
+            <column name="category" value="FREELANCE"/>
+            <column name="amount" value="500.00"/>
+            <column name="date" valueDate="2025-10-12"/>
+            <column name="description" value="Freelance project payment"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
